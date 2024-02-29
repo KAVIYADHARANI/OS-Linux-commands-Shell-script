@@ -440,10 +440,12 @@ $1003 | Joe |  7000 | Developer
 
 ```
 sed -n '2,4{s/$/*/;p}' file23
+## OUTPUT
+```
 1001 | Ram | 10000 | HR*
 1002 | tom |  5000 | Admin*
 1003 | Joe |  7000 | Developer*
-
+```
 #Sorting File content
 cat > file21
 ```
