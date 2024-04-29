@@ -24,70 +24,63 @@ Testing the commands for the desired output.
 ### Create the following files file1, file2 as follows:
 cat > file1
 ```
-chanchal singhvi
-c.k. shukla
-s.n. dasgupta
-sumit chakrobarty
+Kaviya
+Niveditaa
+Zafreen
 ^d
 ```
 cat > file2
 ```
-anil aggarwal
-barun sengupta
-c.k. shukla
-lalit chowdury
-s.n. dasgupta
+Gayathri
+Mahalakshmi
+Hemavathy
 ^d
 ```
 ### Display the content of the files
 cat < file1
 ## OUTPUT
 ```
-chanchal singhvi
-c.k. shukla
-s.n. dasgupta
-sumit chakrobarty
+Kaviya
+Niveditaa
+Zafreen
 ```
 cat < file2
 ## OUTPUT
 ```
-anil aggarwal
-barun sengupta
-c.k. shukla
-lalit chowdury
-s.n. dasgupta
+Gayathri
+Mahalakshmi
+Hemavathy
 ```
 # Comparing Files
 cmp file1 file2
 ## OUTPUT
 ```
-file1 file2 differ: byte 1, line 1
+file1 file2 differ: char 1, line 1
 ```
 comm file1 file2
 
  ## OUTPUT
  ```
-	anil aggarwal
-	barun sengupta
-chanchal singhvi
-		c.k. shukla
-	lalit chowdury
-		s.n. dasgupta
-sumit chakrobarty
+ Gayathri
+        Mahalakshmi
+        Hemavathy
+Kaviya
+Niveditaa
+Zafreen
  ```
 diff file1 file2
 
 ## OUTPUT
-1c1,2
-< chanchal singhvi
----
 ```
-> anil aggarwal
-> barun sengupta
-2a4
-> lalit chowdury
-4d5
-< sumit chakrobarty
+--- file1
++++ file2
+@@ -1,3 +1,3 @@
+-Kaviya
+-Niveditaa
+-Zafreen
++Gayathri
++Mahalakshmi
++Hemavathy
 ```
 #Filters
 
@@ -165,7 +158,6 @@ cat newfile | grep -i "hello"
 ## OUTPUT
 ```
 Hello world
-hello world
 ```
 
 
@@ -174,12 +166,6 @@ cat newfile | grep -i -c "hello"
 ```
 2
 ```
-
-
-grep -R ubuntu /etc
-## OUTPUT
-
-
 
 grep -w -n world newfile   
 ## OUTPUT
@@ -404,9 +390,7 @@ seq 10 | sed -n '4,6p'
 seq 10 | sed -n '2,~4p'
 ## OUTPUT
 ```
-2
-3
-4
+sed: no address after comma
 ```
 
 seq 3 | sed '2a hello'
@@ -531,10 +515,19 @@ www.mrcet.com
 tar -cvf backup.tar *
 ## OUTPUT
 ```
-bench.py 
+bench.py
+file
+file1
+file11
+file2
+file21
+file22
+file23
 hello.c
 hello.js
+newfile
 readme.txt
+urllist.txt
 ```
 mkdir backupdir
  
@@ -545,17 +538,35 @@ tar -tvf backup.tar
 ## OUTPUT
 ```
 -rw-r--r-- root/root       114 2020-07-05 23:17:07 bench.py
+-rw-r--r-- root/root         0 2024-02-21 13:41:13 file
+-rw-r--r-- root/root        24 2024-02-21 13:28:46 file1
+-rw-r--r-- root/root        29 2024-02-21 13:32:34 file11
+-rw-r--r-- root/root        31 2024-02-21 13:29:10 file2
+-rw-r--r-- root/root       131 2024-02-21 15:53:13 file21
+-rw-r--r-- root/root       155 2024-02-21 15:54:56 file22
+-rw-r--r-- root/root       210 2024-02-21 21:18:35 file23
 -rw-r--r-- root/root        76 2020-07-03 14:45:56 hello.c
 -rw-r--r-- root/root        22 2020-06-26 14:57:33 hello.js
+-rw-r--r-- root/root        96 2024-02-21 21:09:36 newfile
 -rw-r--r-- root/root       151 2020-07-05 23:19:13 readme.txt
+-rw-r--r-- root/root        52 2024-02-21 21:21:17 urllist.txt
 ```
 tar -xvf backup.tar
 ## OUTPUT
 ```
 bench.py
+file
+file1
+file11
+file2
+file21
+file22
+file23
 hello.c
 hello.js
+newfile
 readme.txt
+urllist.txt
 ```
 gzip backup.tar
 
@@ -600,7 +611,6 @@ for this non stop movement
 ```
 cat < scriptest.sh 
 ```
-bash
 \#!/bin/sh
 echo “File name is $0 ”
 echo "File name is " `basename $0`
@@ -617,7 +627,6 @@ ps
 
 cat scriptest.sh 
 ```
-bash
 \#!/bin/sh
 echo “File name is $0 ”
 echo "File name is " `basename $0`
@@ -655,29 +664,30 @@ The $$ is  5564
 ls file1
 ## OUTPUT
 ```
-echo $?
-```
-
-## OUTPUT
+file1  file2  file3
 ```
 ./one
 bash: ./one: Permission denied
+
+## OUTPUT
+```
+126
 ``` 
 echo $?
 ## OUTPUT 
 ``` 
-abcd
+0
 ``` 
-echo $?
+abcd echo $?
  ## OUTPUT
-
-
+```
+127
+```
  
 # mis-using string comparisons
 
 cat < strcomp.sh 
 ```
-bash
 \#!/bin/bash
 val1=baseball
 val2=hockey
@@ -692,7 +702,6 @@ fi
 
 cat strcomp.sh 
 ```
-bash
 \#!/bin/bash
 val1=baseball
 val2=hockey
@@ -705,8 +714,6 @@ fi
 ```
 
 
-
-
 chmod 755 strcomp.sh
  
 ./strcomp.sh 
@@ -717,7 +724,6 @@ baseball is less than hockey
 # check file ownership
 cat < psswdperm.sh
 ```
-bash
 \#!/bin/bash
 if [ -O /etc/passwd ]
 then
@@ -730,7 +736,6 @@ fi
 
 cat psswdperm.sh 
 ```
-bash
 /#!/bin/bash
 if [ -O /etc/passwd ]
 then
@@ -747,7 +752,6 @@ Sorry, you are not the owner of the /etc/passwd file
 # check if with file location
 cat>ifnested.sh
 ```
-bash
 \#!/bin/bash
 if [ -e $HOME ]
 then
@@ -799,7 +803,6 @@ fi
 # using numeric test comparisons
 cat > iftest.sh
 ```
-bash
 \#!/bin/bash
 val1=10
 val2=11
@@ -819,7 +822,6 @@ fi
 
 cat iftest.sh 
 ```
-bash
 \#!/bin/bash
 val1=10
 val2=11
@@ -839,11 +841,13 @@ $ chmod 755 iftest.sh
  
 $ ./iftest.sh 
 ##OUTPUT
-
+```
+“The test value 10 is greater than 5”
+“The values are different”
+```
 # check if a file
 cat > ifnested.sh 
 ```
-bash
 \#!/bin/bash
 if [ -e $HOME ]
 then
@@ -866,7 +870,6 @@ fi
 
 cat ifnested.sh 
 ```
-bash
 \#!/bin/bash
 if [ -e $HOME ]
 then
@@ -898,7 +901,6 @@ $ ./ifnested.sh
 # looking for a possible value using elif
 cat elifcheck.sh 
 ```
-bash
 \#!/bin/bash
 if [ $USER = Ram ]
 then
@@ -929,7 +931,6 @@ Sorry, you are not allowed here
 # testing compound comparisons
 cat> ifcompound.sh 
 ```
-bash
 \#!/bin/bash
 if [ -d $HOME ] && [ -w $HOME ]
 then
@@ -947,7 +948,6 @@ The file exists and you can write to it
 # using the case command
 cat >casecheck.sh 
 ```
-bash
 case $USER in
 Ram | Robert)
 echo "Welcome, $USER"
@@ -963,10 +963,12 @@ esac
 $ chmod 755 casecheck.sh 
  
 $ ./casecheck.sh 
- 
+## OUTPUT
+ ```
+Sorry, you are not allowed here
+```
 cat > whiletest
 ```
-bash
 #!/bin/bash
 #while command test
 var1=10
@@ -994,7 +996,6 @@ $ ./whiletest.sh
 ```
 cat untiltest.sh
 ```
-bash
 \#using the until command
 var1=100
 until [ $var1 -eq 0 ]
@@ -1014,7 +1015,6 @@ $ chmod 755 untiltest.sh
  
 cat forin1.sh 
 ```
-bash
 \#!/bin/bash
 \#basic for command
 for test in Alabama Alaska Arizona Arkansas California Colorado
@@ -1035,7 +1035,6 @@ The next state is Colorado
 ``` 
 cat forin2.sh 
 ```
-bash
 \#!/bin/bash
 \# another example of how not to use the for command
 for test in I don't know if this'll work
@@ -1044,26 +1043,7 @@ echo “word:$test”
 done
 ``` 
  
-$ chmod 755 forin2.sh
-## OUTPUT
-```
-“word:I”
-“word:dont know if thisll”
-“word:work”
-```
-cat forin2.sh 
-```
-bash
-\#!/bin/bash
-\# another example of how not to use the for command
-for test in I don't know if this'll work
-do
-echo “word:$test”
-done
-```
-$ chmod 755 forin2.sh
- 
-$ ./forin2.sh 
+$ chmod 755 forin2.sh $ ./forin2.sh
 ## OUTPUT
 ```
 “word:I”
@@ -1072,7 +1052,6 @@ $ ./forin2.sh
 ```
 cat forin3.sh 
 ```
-bash
 \#!/bin/bash
 \# another example of how not to use the for command
 for test in I don\'t know if "this'll" work
@@ -1092,7 +1071,6 @@ word:work
 ```
 cat forin1.sh 
 ```
-bash
 #!/bin/bash
 # basic for command
 for test in Alabama Alaska Arizona Arkansas California Colorado
@@ -1104,7 +1082,6 @@ $ chmod 755 forin1.sh
 
 ## OUTPUT
 ```
-The next state is Alabama
 The next state is Alaska
 The next state is Arizona
 The next state is Arkansas
@@ -1113,7 +1090,6 @@ The next state is Colorado
 ```
 cat forinfile.sh 
 ```
-bash
 #!/bin/bash
 # reading values from a file
 file="cities"
@@ -1145,7 +1121,6 @@ Visit beautiful Khammam
 
 cat forctype.sh 
 ```
-bash
 #!/bin/bash
 # testing the C-style for loop
 for (( i=1; i <= 5; i++ ))
@@ -1166,7 +1141,6 @@ The value of i is 5
 
 cat forctype1.sh 
 ```
-bash
 #!/bin/bash
 # multiple variables
 for (( a=1, b=5; a <= 5; a++, b-- ))
@@ -1187,7 +1161,6 @@ $ ./forctype1.sh
 
 cat fornested1.sh 
 ```
-bash
 #!/bin/bash
 # nesting for loops
 for (( a = 1; a <= 3; a++ ))
@@ -1220,7 +1193,6 @@ $ ./fornested1.sh
  
 cat forbreak.sh 
 ```
-bash
 #!/bin/bash
 # breaking out of a for loop
 for var1 in 1 2 3 4 5
@@ -1245,7 +1217,6 @@ The for loop is completed
 
 cat forcontinue.sh 
 ```
-bash
 #!/bin/bash
 # breaking out of a for loop
 for var1 in 1 2 3 4 5
@@ -1273,7 +1244,6 @@ The for loop is completed
 ```
 cat exread.sh 
 ```
-bash
 #!/bin/bash
 # testing the read command
 echo -n "Enter your name: "
@@ -1291,7 +1261,6 @@ Hello Kaviya, welcome to my program.
 ```
  cat exread1.sh
 ```
-bash
 #!/bin/bash
 # testing the read command
 read -p "Enter your name: " name
@@ -1309,7 +1278,6 @@ $ ./exread1.sh
  
 cat funcex.sh
 ```
-bash
 #!/bin/bash
 # trying to access script parameters inside a function
 function func {
@@ -1335,7 +1303,6 @@ The result is 2
 
 cat argshift.sh
 ```
-bash
 #!/bin/bash 
  while (( "$#" )); do 
   echo $1 
@@ -1354,7 +1321,6 @@ $ ./argshift.sh 1 2 3
 ```
  cat argshift1.sh
 ```
-bash
  #/bin/bash 
  # store arguments in a special array 
 args=("$@") 
@@ -1377,7 +1343,6 @@ $ ./argshift.sh 1 2 3
 ```
 cat argshift.sh
 ```
-bash
 #!/bin/bash 
 set -x 
 while (( "$#" )); do 
@@ -1407,7 +1372,6 @@ set +x
 ```
 cat > nc.awk
 ```
-bash
 BEGIN{}
 {
 print len=length($0),"\t",$0 
@@ -1422,7 +1386,6 @@ print "No of Words count:",wordcount
 ``` 
 cat>data.dat
 ```
-bash
 bcdfghj
 abcdfghj
 bcdfghj
@@ -1455,7 +1418,6 @@ No of Words count: 11
 
 cat > palindrome.sh
 ```
-bash
 #num=545
 echo "Enter the number"
 read num
@@ -1472,7 +1434,6 @@ do
 	# current digit in reverse
 	rev=$( echo ${rev}${s} )
 done
-
 if [ $temp -eq $rev ];
 then
 	echo "Number is palindrome"
